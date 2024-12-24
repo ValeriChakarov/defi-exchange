@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dashboard-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        h3 {
+            margin-top: 20px;
+            color: #555;
+        }
+        .logout-button, .oauth2-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .logout-button:hover, .oauth2-button:hover {
+            background-color: #45a049;
+        }
+        .protocol-list {
+            margin-top: 30px;
+            padding: 0;
+            list-style-type: none;
+        }
+        .protocol-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+        .protocol-list a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .protocol-list a:hover {
+            color: #4CAF50;
+        }
+        .balance-container {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+        .balance-container p {
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <h2>Welcome to the Dashboard</h2>
+    <!-- Display logged-in user's name -->
+    <h2>Welcome, <span th:text="${name}">User</span></h2>
+    <p>You're logged in successfully!</p>
+
+    <!-- Ethereum Balance Display -->
+    <div class="balance-container">
+        <h3>Your Ethereum Balance</h3>
+        <p th:text="'Balance: ' + ${ethBalance} + ' ETH'"></p>
+    </div>
+
+    <a href="/logout" class="logout-button">Logout</a>
+
+    <h3>Available DeFi Protocols</h3>
+    <ul class="protocol-list">
+        <li th:each="protocol : ${deFiProtocols}">
+            <a th:href="@{${protocol.url}}" th:text="${protocol.name}"></a>
+            <p th:text="${protocol.description}"></p>
+        </li>
+    </ul>
+    <div>
+        <h3>Uniswap Trading Pairs</h3>
+        <ul>
+            <th:block th:each="pair : ${uniswapTradingPairs}">
+                <li th:text="${pair}"></li>
+            </th:block>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
